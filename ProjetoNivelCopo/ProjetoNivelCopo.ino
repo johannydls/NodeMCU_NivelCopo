@@ -5,13 +5,18 @@
  * copo e disponibilizar via internet, através do ESP-12E
  */
 
+#include "indexHTML.h"
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-const char *ssid = "GVT-BAF1";
-const char *password = "2203001699";
+const char *ssid = "EVERTON";
+const char *password = "araujolopes";
+
+const char *ssidAP = "ESP-JLS";
+const char *passwordAP = "123456789";
+
 const int porta = 80;
 
 ESP8266WebServer server (porta);
@@ -32,24 +37,19 @@ void handleRoot() {
   <head>\
     <meta http-equiv='refresh' content='5'/>\
     <title>Monitoramento de Copos</title>\
-    <style>\
-      body { background-color: #d1e1ff;\
-             font-family: Arial, Helvetica, Sans-Serif;\
-             Color: #000088;\
-      }\
-    </style>\
+    <style>%s</style>\
   </head>\
   <body align='center'>\
     <h1>Gerenciamento de copos<br>LABARC - UFCG 2018.1</h1>\
     <h4>Feito por Johanny de Lucena Santos</h4>\
     <hr />\
     <h2>Copo #1: %s</h2><br>\
-    <img src=\"/copos.svg\" style=\"width:360px;\"/>\
+    <img src=\"/copos.svg\"/>\
     <br>\
     <p><em>Atualizado a cada 5 segundos</em></p>\
   </body>\
 </html>",
-  textoNivel().c_str()
+  css.c_str(), textoNivel().c_str()
   );
   server.send(200, "text/html; charset=utf-8", temp);
 }
@@ -86,6 +86,10 @@ void setup() {
   WiFi.begin(ssid, password);
   Serial.println("");
 
+  //Configuração Access Point
+  WiFi.softAP(ssidAP, passwordAP);
+  IPAddress ipAP = WiFi.softAPIP();
+
   //Esperando por conexão
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -98,6 +102,13 @@ void setup() {
   Serial.println(ssid);
   Serial.print("Endereço IP: ");
   Serial.println(WiFi.localIP());
+  Serial.println("");
+
+  //Log do Access Point
+  Serial.print("SSID Access Point: ");
+  Serial.println(ssidAP);
+  Serial.print("Wifi Access Point IP: ");
+  Serial.println(ipAP);
   Serial.println("");
 
   if (MDNS.begin("esp8266")) {
@@ -155,19 +166,19 @@ String textoNivel() {
   String out = "";
 
   if (alto > 50 && medio > 50 && baixo > 50 && baixissimo > 50) {
-    out += "CHEIO";
+    out += "<span style='color:green;'>CHEIO</span>";
   }
 
   else if (alto < 50 && medio > 50 && baixo > 50 && baixissimo > 50) {
-    out += "NA METADE";
+    out += "<span style='color: yellow;'>NA METADE</span>";
   }
 
   else if (alto < 50 && medio < 50 && baixo > 50 && baixissimo > 50) {
-    out += "MENOS DA METADE";
+    out += "<span style='color: orange;'>MENOS DA METADE</span>";
   }
 
   else if (alto < 50 && medio < 50 && baixo < 50 && baixissimo > 50) {
-    out += "QUASE ACABANDO";
+    out += "<span style='color: red;'>QUASE ACABANDO</span>";
   }
 
   else {
