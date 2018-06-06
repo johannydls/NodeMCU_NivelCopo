@@ -12,7 +12,7 @@
 #include <ESP8266mDNS.h>
 
 const char *ssid = "ssid";
-const char *password = "senha";
+const char *password = "pwd";
 
 const char *ssidAP = "ESP-JLS";
 const char *passwordAP = "123456789";
@@ -130,7 +130,9 @@ void setup() {
 }
 
 void loop() {
+  
   server.handleClient();
+  
 }
 
 /*
@@ -201,6 +203,7 @@ void desenhaCopo() {
   String out = "";
 
   if (alto > 50 && medio > 50 && baixo > 50 && baixissimo > 50) {
+
     //Desenha o copo no nivel alto
 
     out += "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='415px' height='520px' viewBox='6 5 127 159' preserveAspectRatio='xMidYMid meet'>";
@@ -274,6 +277,7 @@ void desenhaCopo() {
   }
 
   else if (alto < 50 && medio > 50 && baixo > 50 && baixissimo > 50) {
+
     //Desenha o copo no nivel medio
 
     out += "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='415px' height='520px' viewBox='6 5 127 159' preserveAspectRatio='xMidYMid meet'>";
@@ -347,6 +351,7 @@ void desenhaCopo() {
   }
 
   else if (alto < 50 && medio < 50 && baixo > 50 && baixissimo > 50) {
+
     //Desenha o copo no nivel baixo
 
     out += "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='415px' height='520px' viewBox='6 5 127 159' preserveAspectRatio='xMidYMid meet'  >";
@@ -420,7 +425,8 @@ void desenhaCopo() {
   }
 
   else if (alto < 50 && medio < 50 && baixo < 50 && baixissimo > 50) {
-    //Desenha o copo no nivel baixissomo
+
+    //Desenha o copo no nivel baixissimo
 
     out += "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='415px' height='520px' viewBox='6 5 127 159' preserveAspectRatio='xMidYMid meet'>";
     out += "<rect id='svgEditorBackground' x='0' y='0' width='870' height='520' style='fill:none; stroke: none;'/>";
@@ -493,6 +499,7 @@ void desenhaCopo() {
   }
 
   else {
+    
     //Desenha o copo seco
 
     out += "<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='415px' height='520px' viewBox='5.99138 5 127.017 159' preserveAspectRatio='xMidYMid meet'>";
