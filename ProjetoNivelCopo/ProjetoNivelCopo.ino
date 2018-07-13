@@ -11,8 +11,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266mDNS.h>
 
-const char *ssid = "ssid";
-const char *password = "pwd";
+const char *ssid = "LAD";
+const char *password = "lad0cmbdb";
 
 const char *ssidAP = "ESP-JLS";
 const char *passwordAP = "123456789";
